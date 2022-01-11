@@ -1,3 +1,4 @@
+//array de games name,categorie,price,image
 const games = [
     {
         gameName : "Project Zomboid",
@@ -49,7 +50,7 @@ const games = [
     }
 ]
 
-
+//array de cuentas id,level,name,age,user,password
 const accounts = [
     {
         id: 0,
@@ -58,13 +59,10 @@ const accounts = [
         age: 28,
         user: "admin",
         password: "admin"
-    },
-    {
-        user: "puto",
-        password: "admin2"
     }
 ]
 
+//funcion para ordenar de forma ascendente o descentente el array games
 function gameSort(property,ascDesc){
     switch(property){
         case 1:
@@ -93,6 +91,7 @@ function gameSort(property,ascDesc){
     }
 }
 
+//funcion para comprar juegos
 function buyGames(name){
     let gamePrices = 0;
     let exit = true;
@@ -137,14 +136,17 @@ function buyGames(name){
     }    
 }
 
+//funcion agregar iva
 function addIva(price){
     return parseFloat(price+(price*.16)).toFixed(2);
 }
 
+//funcion descuento
 function addDiscount(price,discount){
     return price-(price*parseFloat(discount));
 }
 
+//verifica que el codigo sea 'coder' para agregar descuento
 function correctDiscount(discount){
     if(discount == "coder"){
         return .50;
@@ -153,6 +155,8 @@ function correctDiscount(discount){
     }
 }
 
+
+//clase User
 class User{
     constructor(id,level,name,age,user,password){
         this.id = id;
@@ -163,10 +167,12 @@ class User{
         this.password = password;
     }
 
+    //funcion que imprime los datos
     showData(){
         return "your name: "+this.name+"\nyour age: "+this.age+"\nyour user: "+this.user+"\nyour password: "+this.password;
     }
 
+    //funcion para cambiar el valor de las propiedades de la clase user
     changeData(option){
         switch(option){
             case 1: this.name = prompt("Please type your name.");
@@ -182,6 +188,7 @@ class User{
     }
 }
 
+//funcion para logear retorna la posicion en el array accounts
 function loginAccount(user,password){
     if(accounts[accounts.findIndex(el => el.user === user)] === accounts[accounts.findIndex(el => el.password === password)] && accounts[accounts.findIndex(el => el.user === user)] != null){
         return accounts.findIndex(el => el.user === user);
@@ -189,12 +196,15 @@ function loginAccount(user,password){
     return null;
 }
 
+//funcion para registrar un usuario hace push al array account
 function registerAccount(){
     accounts.push(new User(accounts.length,1,prompt("What's your name?"),parseInt(prompt("What's your age?")),prompt("Please type your account"),prompt("Please type your password")));
 }
 
+//cargar la pagina primero
 document.onload = console.log("loading :D");
 
+//bucle del programa cuando logeas haces compras y sales, si no tienes cuenta te registras
 let exit = true;
 while(exit){
     let option = parseInt(prompt("1 - Login\n2 - Register\n3 - Exit"));
