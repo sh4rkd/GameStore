@@ -1,0 +1,21 @@
+footer {
+	background-image: linear-gradient(to right, $clr-primary 30%, $clr-dark-blue 100%);
+	color: $clr-secondary;
+	text-align: center;
+	font-size: 0.8rem;
+	padding: 20px;
+
+	section {
+		margin-bottom: 20px;
+	}
+
+	img {
+		width: $img-width;
+		height: 40px;
+		padding-bottom: 5px;
+	}
+	
+	h2{
+		margin-bottom: 2rem;
+	}
+}

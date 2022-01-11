@@ -1,0 +1,16 @@
+.hero {
+    margin: unset;
+    height: 85vh;
+    background: url("../media/images/hero_game.jpg") no-repeat center/cover;
+    display: grid;
+    place-content: center;
+    margin-bottom: 3rem;
+
+    &-title {
+        color: $clr-light-blue;
+        font-family: $font-anton;
+        font-size: 8rem;
+        line-height: 1.1;
+        text-shadow: 3px 3px 7px $clr-dark-blue;
+    }
+}

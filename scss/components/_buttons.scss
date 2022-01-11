@@ -1,0 +1,23 @@
+.btn {
+	display: inline-block;
+	padding: 0.5em 1.25em;
+	border-radius: 2em;
+	cursor: pointer;
+	letter-spacing: 0.2em;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+
+	&-primary {
+		font-weight: 400;
+		@include button-variant($clr-primary, darken($clr-primary, 0.5%), $clr-gray, $clr-dark-blue, lighten($clr-dark-blue, 10%), $clr-secondary);
+	}
+
+	&-line {
+		color: $clr-primary;
+		text-shadow: 0.1em 0.2em 0.1em rgb(0, 0, 0);
+		background: transparent;
+		&:hover{
+			color: $clr-secondary;
+		}
+	}
+}
