@@ -49,6 +49,50 @@ const games = [
     }
 ]
 
+
+const accounts = [
+    {
+        id: 0,
+        level: 0,
+        name: "Fred",
+        age: 28,
+        user: "admin",
+        password: "admin"
+    },
+    {
+        user: "puto",
+        password: "admin2"
+    }
+]
+
+function gameSort(property,ascDesc){
+    switch(property){
+        case 1:
+                if(ascDesc == 1){
+                    console.log({...games.sort((a,b) => (a.gameName < b.gameName) ? -1 : (a.gameName > b.gameName) ? 1 : 0)});
+                }else{
+                    console.log({...games.sort((a,b) => (a.gameName < b.gameName) ? 1 : (a.gameName > b.gameName) ? -1 : 0)});
+                }
+            break;
+        case 2:
+                if(ascDesc == 1){
+                    console.log({...games.sort((a,b) => (a.gameCategorie < b.gameCategorie) ? -1 : (a.gameCategorie > b.gameCategorie) ? 1 : 0)});
+                }else{
+                    console.log({...games.sort((a,b) => (a.gameCategorie < b.gameCategorie) ? 1 : (a.gameCategorie > b.gameCategorie) ? -1 : 0)});
+                }
+            break;
+        case 3:
+                if(ascDesc == 1){
+                    console.log({...games.sort((a,b) => a.gamePrice - b.gamePrice)});
+                }else{
+                    console.log({...games.sort((a,b) => b.gamePrice - a.gamePrice)});
+                }
+            break;
+        default:
+            console.log("Error type a number 1 - 3");
+    }
+}
+
 function buyGames(name){
     let gamePrices = 0;
     let exit = true;
@@ -60,6 +104,7 @@ function buyGames(name){
         if(categoriesSelected==1){
             gameSelected = parseInt(prompt("Welcome to Horror Section, what game do you want?\n1 - Project Zomboid\n2 - Phasmophobia\n3 - Dead By Daylight\n4 - The Forest"));
             if(gameSelected==1){
+                                //games[0].
                 gamePrices+= games[games.findIndex(el => el.gameName === "Project Zomboid")].gamePrice;
             }else if(gameSelected==2){
                 gamePrices+= games[games.findIndex(el => el.gameName === "Phasmophobia")].gamePrice;
@@ -109,7 +154,9 @@ function correctDiscount(discount){
 }
 
 class User{
-    constructor(name,age,user,password){
+    constructor(id,level,name,age,user,password){
+        this.id = id;
+        this.level = level;
         this.name = name;
         this.age = age;
         this.user = user;
@@ -135,11 +182,48 @@ class User{
     }
 }
 
+function loginAccount(user,password){
+    if(accounts[accounts.findIndex(el => el.user === user)] === accounts[accounts.findIndex(el => el.password === password)] && accounts[accounts.findIndex(el => el.user === user)] != null){
+        return accounts.findIndex(el => el.user === user);
+    }
+    return null;
+}
+
+function registerAccount(){
+    accounts.push(new User(accounts.length,1,prompt("What's your name?"),parseInt(prompt("What's your age?")),prompt("Please type your account"),prompt("Please type your password")));
+}
+
 document.onload = console.log("loading :D");
 
-const user = new User(prompt("What's your name?"),parseInt(prompt("How old are you?")),prompt("Please type your username"),prompt("Type your password"));
+let exit = true;
+while(exit){
+    let option = parseInt(prompt("1 - Login\n2 - Register\n3 - Exit"));
+    switch(option){
+        case 1:
+                let acc = loginAccount(prompt("Your account?"),prompt("Your password?"));
+                if(acc!=null){
+                    alert("The total is: "+addIva(addDiscount(buyGames(accounts[acc].name),correctDiscount(prompt("Type a discount code!")))));
+                    exit = false;
+                }else{
+                    alert("That account does not exist");
+                }
+            break;
+        case 2: registerAccount();
+                break;
+        case 3:
+                alert("Good bye!");
+                exit = false;
+                break;
+        default:
+            alert("Type a number 1 - 3");
+    }
+}
 
-alert("The total is: "+addIva(addDiscount(buyGames(user.name),correctDiscount(prompt("Type a discount code!")))));
+// document.onload = console.log("loading :D");
+
+// const user = new User(prompt("What's your name?"),parseInt(prompt("How old are you?")),prompt("Please type your username"),prompt("Type your password"));
+
+// alert("The total is: "+addIva(addDiscount(buyGames(user.name),correctDiscount(prompt("Type a discount code!")))));
 
 // alert(user.showData());
 
@@ -147,3 +231,18 @@ alert("The total is: "+addIva(addDiscount(buyGames(user.name),correctDiscount(pr
 
 // alert(user.showData());
 
+// let exit = true;
+// while(exit){
+//     let option = parseInt(prompt("Welcome to the ultra order object system 3.4 alpha\nPlease select what games do you want to order.\n1 - order by name\n2 - order by genre\n3 - order by price\nanother option >:D - exit"))
+
+//     if(option == 1){
+//         gameSort(1,parseInt(prompt("Select if you want asc or desc\n1 - asc\n2 - desc")));
+//     }else if(option == 2){
+//         gameSort(2,parseInt(prompt("Select if you want asc or desc\n1 - asc\n2 - desc")));
+//     }else if(option == 3){
+//         gameSort(3,parseInt(prompt("Select if you want asc or desc\n1 - asc\n2 - desc")));
+//     }else{
+//         alert("Goodbye :D");
+//         exit = false;
+//     }
+// }
