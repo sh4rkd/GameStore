@@ -4,49 +4,49 @@ const games = [
         gameName : "Project Zomboid",
         gameCategorie: "Horror",
         gamePrice : 9.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/108600/header.jpg?t=1639992670"
     },
     {
         gameName : "Phasmophobia",
         gameCategorie: "Horror",
         gamePrice : 14.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/header.jpg?t=1638041534"
     },
     {
         gameName : "Dead By Daylight",
         gameCategorie: "Horror",
         gamePrice : 19.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/381210/header.jpg?t=1639165101"
     },
     {
         gameName : "The Forest",
         gameCategorie: "Horror",
         gamePrice : 4.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/242760/header.jpg?t=1590522045"
     },
     {
         gameName : "Red Dead Redemption 2",
         gameCategorie: "Adventure",
         gamePrice : 19.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg?t=1618851907"
     },
     {
         gameName : "Sea of Thieves",
         gameCategorie: "Adventure",
         gamePrice : 29.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/1172620/header.jpg?t=1638484040"
     },
     {
         gameName : "Forza Horizon 5",
         gameCategorie: "Adventure",
         gamePrice : 9.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg?t=1640881911"
     },
     {
         gameName : "Grand Theft Auto V",
         gameCategorie: "Adventure",
         gamePrice : 49.99,
-        image : ""
+        image : "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg?t=1618856444"
     }
 ]
 
@@ -201,10 +201,36 @@ function registerAccount(){
     accounts.push(new User(accounts.length,1,prompt("What's your name?"),parseInt(prompt("What's your age?")),prompt("Please type your account"),prompt("Please type your password")));
 }
 
+function gameToHtml(games){
+    let gamePosition = 0;
+    for(let i = 0; i<document.getElementsByClassName('games').length;i++){
+        for(let j = 0; j<document.getElementsByClassName('games')[i].children.length;j++){
+            for(let k = 0; k<document.getElementsByClassName('games')[i].children[j].children.length;k++){
+                switch(k){
+                    case 0: document.getElementsByClassName('games')[i].children[j].children[k].innerHTML = games[gamePosition].gameName;
+                        break;
+                    case 1: document.getElementsByClassName('games')[i].children[j].children[k].src = games[gamePosition].image;
+                        break;
+                    case 2: document.getElementsByClassName('games')[i].children[j].children[k].innerHTML = "BUY FOR $"+games[gamePosition].gamePrice;
+                        break;
+                    default: continue;
+                }
+            }
+            gamePosition++;
+        }
+    }
+
+}
+
 //cargar la pagina primero
 document.onload = console.log("loading :D");
+document.getElementById('add-games').addEventListener("click",() =>{
+    gameToHtml(games);
+});
 
-//bucle del programa cuando logeas haces compras y sales, si no tienes cuenta te registras
+
+
+/*bucle del programa cuando logeas haces compras y sales, si no tienes cuenta te registras
 let exit = true;
 while(exit){
     let option = parseInt(prompt("1 - Login\n2 - Register\n3 - Exit"));
@@ -227,7 +253,7 @@ while(exit){
         default:
             alert("Type a number 1 - 3");
     }
-}
+}*/
 
 // document.onload = console.log("loading :D");
 
