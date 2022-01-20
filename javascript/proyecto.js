@@ -197,21 +197,24 @@ function loginAccount(user,password){
 }
 
 //funcion para registrar un usuario hace push al array account
-function registerAccount(){
-    accounts.push(new User(accounts.length,1,prompt("What's your name?"),parseInt(prompt("What's your age?")),prompt("Please type your account"),prompt("Please type your password")));
+//array de cuentas id,level,name,age,user,password
+function registerAccount(name,age,user,password){
+    accounts.push(new User(accounts.length,1,name,age,user,password));
+    console.log(accounts);
 }
 
 function gameToHtml(games){
     let gamePosition = 0;
-    for(let i = 0; i<document.getElementsByClassName('games').length;i++){
-        for(let j = 0; j<document.getElementsByClassName('games')[i].children.length;j++){
-            for(let k = 0; k<document.getElementsByClassName('games')[i].children[j].children.length;k++){
+    let gamehtml = document.getElementsByClassName('games');
+    for(let i = 0; i<gamehtml.length;i++){
+        for(let j = 0; j<gamehtml[i].children.length;j++){
+            for(let k = 0; k<gamehtml[i].children[j].children.length;k++){
                 switch(k){
-                    case 0: document.getElementsByClassName('games')[i].children[j].children[k].innerHTML = games[gamePosition].gameName;
+                    case 0: gamehtml[i].children[j].children[k].innerHTML = games[gamePosition].gameName;
                         break;
-                    case 1: document.getElementsByClassName('games')[i].children[j].children[k].src = games[gamePosition].image;
+                    case 1: gamehtml[i].children[j].children[k].src = games[gamePosition].image;
                         break;
-                    case 2: document.getElementsByClassName('games')[i].children[j].children[k].innerHTML = "BUY FOR $"+games[gamePosition].gamePrice;
+                    case 2: gamehtml[i].children[j].children[k].innerHTML = "BUY FOR $"+games[gamePosition].gamePrice;
                         break;
                     default: continue;
                 }
@@ -228,7 +231,11 @@ document.getElementById('add-games').addEventListener("click",() =>{
     gameToHtml(games);
 });
 
-
+document.getElementById('registerData').addEventListener("submit",(e) =>{
+    //registerAccount()
+    e.preventDefault();
+    console.log(document.getElementById('registerData'));
+});
 
 /*bucle del programa cuando logeas haces compras y sales, si no tienes cuenta te registras
 let exit = true;
