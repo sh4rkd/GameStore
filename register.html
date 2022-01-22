@@ -24,16 +24,14 @@
     </header>
 
     <main>
-        <form enctype="text/plain" id="registerData">
-            <fieldset>
+        <form id="completeData">
                 <h1>Register</h1>
-                <input class="form-control text-center" type="text" name="username" placeholder="Please type a username" >
-                <input class="form-control text-center"  type="email" name="email" placeholder="Your email" >
-                <input class="form-control text-center"  type="password" name="password" placeholder="Password" >                
-                <input class="form-control text-center" type="text" name="name" placeholder="What's your name?" >
-                <input class="form-control text-center" type="number" name="age" placeholder="How old are you?" >
-                <button class="btn btn-primary" type="submit">Submit</button>
-            </fieldset>                         
+                <input class="form-control text-center" type="text" name="username" placeholder="Please type a username" required/>
+                <input class="form-control text-center"  type="email" name="email" placeholder="Your email" required/>
+                <input class="form-control text-center"  type="password" name="password" placeholder="Password" required/>                
+                <input class="form-control text-center" type="text" name="name" placeholder="What's your name?" required/>
+                <input class="form-control text-center" type="number" name="age" placeholder="How old are you?" required/>
+                <button class="btn btn-primary" type="submit">Submit</button>                   
         </form>               
     </main>
 
