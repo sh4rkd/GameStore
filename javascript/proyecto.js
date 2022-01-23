@@ -47,6 +47,12 @@ const games = [
         gameCategorie: "Adventure",
         gamePrice : 49.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg?t=1618856444"
+    },
+    {
+        gameName : "Lost Ark",
+        gameCategorie : "MMOARPG",
+        gamePrice : 99.99,
+        image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1599340/header.jpg?t=1642093292"
     }
 ]
 
@@ -111,46 +117,36 @@ function registerAccount(username,email,password,name,age){
 }
 
 function gameToHtml(games){
-    let gamePosition = 0;
-    let gamehtml = document.getElementsByClassName('games');
-    for(let i = 0; i<gamehtml.length;i++){
-        for(let j = 0; j<gamehtml[i].children.length;j++){
-            for(let k = 0; k<gamehtml[i].children[j].children.length;k++){
-                switch(k){
-                    case 0: gamehtml[i].children[j].children[k].innerHTML = games[gamePosition].gameName;
-                        break;
-                    case 1: gamehtml[i].children[j].children[k].src = games[gamePosition].image;
-                        break;
-                    case 2: gamehtml[i].children[j].children[k].innerHTML = "BUY FOR $"+games[gamePosition].gamePrice;
-                        break;
-                    default: continue;
-                }
-            }
-            gamePosition++;
+    const uniqueArr = [];
+    games.forEach((item)=>{
+        if(!uniqueArr.includes(item.gameCategorie)){
+            uniqueArr.push(item.gameCategorie);
         }
+    })
+    const gameSection = document.getElementById('games');
+    for(let i=0;i<uniqueArr.length;i++){
+        let categorie = document.createElement('h2');
+        let gameItem = document.createElement('ul');
+        gameItem.setAttribute("class","games");
+        categorie.innerHTML = `${uniqueArr[i]}`;
+        gameSection.appendChild(categorie);
+        games.forEach(game =>{
+            let gameLi = document.createElement('li');
+            if(game.gameCategorie == uniqueArr[i]){
+                gameLi.innerHTML = `
+                    <h3>${game.gameName}</h3>
+                    <img src="${game.image}"/>
+                    <a href="" class="btn btn-primary">BUY FOR $${game.gamePrice}</a>
+                `;
+            }
+                gameItem.appendChild(gameLi)
+        });
+                gameSection.appendChild(gameItem);
     }
-
 }
-
-
 
 function updateAccounts(accounts){
     localStorage.setItem("accounts", JSON.stringify(accounts));
 }
 
-//cargar la pagina primero
-/*document.getElementById('add-games').addEventListener("click",() =>{
-    gameToHtml(games);
-});*/
-
-document.getElementById("completeData").addEventListener("submit",(e)=>{    
-    e.preventDefault()
-    let form = document.getElementById("completeData");
-    registerAccount(form.children[1].value,form.children[2].value,form.children[3].value,form.children[4].value,parseInt(form.children[5].value));
-    for(let i=0;i<form.children.length-1;i++){
-        form[i].value = "";
-    }
-    let completed = document.createElement("p");
-    completed.innerHTML = "Registration successful!";
-    form.appendChild(completed)
-});
+gameToHtml(games);
