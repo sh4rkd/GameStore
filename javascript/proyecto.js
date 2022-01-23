@@ -1,71 +1,67 @@
 //array de games name,categorie,price,image
 const games = [
     {
+        idGame: 0,
         gameName : "Project Zomboid",
         gameCategorie: "Horror",
         gamePrice : 9.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/108600/header.jpg?t=1639992670"
     },
     {
+        idGame: 1,
         gameName : "Phasmophobia",
         gameCategorie: "Horror",
         gamePrice : 14.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/header.jpg?t=1638041534"
     },
     {
+        idGame: 2,
         gameName : "Dead By Daylight",
         gameCategorie: "Horror",
         gamePrice : 19.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/381210/header.jpg?t=1639165101"
     },
     {
+        idGame: 3,
         gameName : "The Forest",
         gameCategorie: "Horror",
         gamePrice : 4.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/242760/header.jpg?t=1590522045"
     },
     {
+        idGame: 4,
         gameName : "Red Dead Redemption 2",
         gameCategorie: "Adventure",
         gamePrice : 19.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg?t=1618851907"
     },
     {
+        idGame: 5,
         gameName : "Sea of Thieves",
         gameCategorie: "Adventure",
         gamePrice : 29.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/1172620/header.jpg?t=1638484040"
     },
     {
+        idGame: 6,
         gameName : "Forza Horizon 5",
         gameCategorie: "Adventure",
         gamePrice : 9.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg?t=1640881911"
     },
     {
+        idGame: 7,
         gameName : "Grand Theft Auto V",
         gameCategorie: "Adventure",
         gamePrice : 49.99,
         image : "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg?t=1618856444"
     },
     {
+        idGame: 8,
         gameName : "Lost Ark",
         gameCategorie : "MMOARPG",
         gamePrice : 99.99,
         image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1599340/header.jpg?t=1642093292"
-    }
-]
-
-//array de cuentas id,level,user,email,password,name,age
-const accounts = [
-    {
-        id: 0,
-        level: 0,
-        user: "admin",
-        email: "admin@admin.com",
-        password: "admin",
-        name: "Fred",
-        age: 28
     }
 ]
 
@@ -88,34 +84,7 @@ function correctDiscount(discount){
     }
 }
 
-
-//clase User
-class User{
-    constructor(id,level,username,email,password,name,age){
-        this.id = id;
-        this.level = level;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.age = age;
-    }
-}
-
-//funcion para logear retorna la posicion en el array accounts
-function loginAccount(user,password){
-    if(accounts[accounts.findIndex(el => el.user === user)] === accounts[accounts.findIndex(el => el.password === password)] && accounts[accounts.findIndex(el => el.user === user)] != null){
-        return accounts.findIndex(el => el.user === user);
-    }
-    return null;
-}
-
-//funcion para registrar un usuario hace push al array account
-function registerAccount(username,email,password,name,age){
-    accounts.push(new User(accounts.length,1,username,email,password,name,age));    
-    updateAccounts(accounts);
-}
-
+//agrega todos los juegos y sus secciones al index.html
 function gameToHtml(games){
     const uniqueArr = [];
     games.forEach((item)=>{
@@ -136,7 +105,7 @@ function gameToHtml(games){
                 gameLi.innerHTML = `
                     <h3>${game.gameName}</h3>
                     <img src="${game.image}"/>
-                    <a href="" class="btn btn-primary">BUY FOR $${game.gamePrice}</a>
+                    <a href="" class="btn btn-primary" id="buy${game.idGame}">BUY FOR $${game.gamePrice}</a>
                 `;
             }
                 gameItem.appendChild(gameLi)
@@ -145,8 +114,41 @@ function gameToHtml(games){
     }
 }
 
-function updateAccounts(accounts){
-    localStorage.setItem("accounts", JSON.stringify(accounts));
+gameToHtml(games);
+
+const shoppingCarts = [];
+
+class Shopping{
+    constructor(id,name,image,price){
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+    }
 }
 
-gameToHtml(games);
+games.forEach(game =>{
+    document.getElementById("buy"+game.idGame).addEventListener("click",(e)=>{
+        e.preventDefault();
+        let cart = document.getElementById("lblCartCount");
+        cart.innerHTML = parseInt(cart.textContent)+1;
+        addShoppingLocalStorage(game.idGame);
+        console.log(shoppingCarts);
+    });
+});
+
+function addShoppingLocalStorage(position){
+    shoppingCarts.push(new Shopping(shoppingCarts.length,games[position].gameName,games[position].image,games[position].gamePrice));
+    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCarts));
+}
+
+function addArrayShoppingCart(){
+    const localStorageShoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
+        if(localStorageShoppingCart!=null){
+            localStorageShoppingCart.forEach(shoppingCart =>{
+                    shoppingCarts.push(shoppingCart);
+            });
+        }
+}
+
+addArrayShoppingCart();
