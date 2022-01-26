@@ -116,8 +116,10 @@ function gameToHtml(games){
 
 gameToHtml(games);
 
+//Array del carrito de compras
 const shoppingCarts = [];
 
+//Clase shopping con su constructor
 class Shopping{
     constructor(id,name,image,price){
         this.id = id;
@@ -127,6 +129,7 @@ class Shopping{
     }
 }
 
+//Funcion que recorre todo el arreglo de juegos para agregar un evento que al dar click agrega al localstorage y la etiqueta del carrito
 games.forEach(game =>{
     document.getElementById("buy"+game.idGame).addEventListener("click",(e)=>{
         e.preventDefault();
@@ -137,11 +140,13 @@ games.forEach(game =>{
     });
 });
 
+//funcion que agrega al localstorage y al array del carrito lo que se esta comprando
 function addShoppingLocalStorage(position){
     shoppingCarts.push(new Shopping(shoppingCarts.length,games[position].gameName,games[position].image,games[position].gamePrice));
     localStorage.setItem("shoppingCart", JSON.stringify(shoppingCarts));
 }
 
+//funcion que agrega del localstorage al array todos su valores mientras exista algo en el localstorage
 function addArrayShoppingCart(){
     const localStorageShoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
         if(localStorageShoppingCart!=null){
