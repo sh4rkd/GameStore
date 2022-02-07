@@ -58,16 +58,23 @@ function updateArrayAccounts(){
 updateArrayAccounts();
 
 //funcion para agregar usuarios al localstorage y al array accounts
-document.getElementById("completeData").addEventListener("submit",(e)=>{    
+$("#completeData").submit((e)=>{    
     e.preventDefault()
-    const form = document.getElementById("completeData");
-    registerAccount(form.children[1].value,form.children[2].value,form.children[3].value,form.children[4].value,parseInt(form.children[5].value));
-    for(let i=0;i<form.children.length-1;i++){
-        form[i].value = "";
+    const data = $("#completeData");
+    $("main").prepend('<p  style="display: none" id="p-user">Registration successful!</p><img id="img-user" src="https://i.pinimg.com/originals/d9/7e/5e/d97e5e00210b6bed29c5aefab712e44f.gif"/>');
+    registerAccount(data[0].firstElementChild.children[1].value,data[0].firstElementChild.children[2].value,data[0].firstElementChild.children[3].value,data[0].firstElementChild.children[4].value,parseInt(data[0].firstElementChild.children[5].value));
+    for(let i=0;i<data[0].firstElementChild.children.length-1;i++){
+        data[0].firstElementChild.children[i].value = "";
     }
-    let completed = document.createElement("p");
-    completed.innerHTML = "Registration successful!";
-    form.appendChild(completed)
+    $("#p-user").fadeIn("slow", function(){
+        $("#p-user").fadeOut(1700);
+    });
+    $("#img-user").fadeOut("slow",function(){
+        $("#img-user").show();
+        $("#img-user").fadeOut(2700);
+    });
+    $("#p-user").remove
+    $("#img-user").remove
 });
 
 
