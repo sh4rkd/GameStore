@@ -157,3 +157,4 @@ function addArrayShoppingCart(){
 }
 
 addArrayShoppingCart();
+
